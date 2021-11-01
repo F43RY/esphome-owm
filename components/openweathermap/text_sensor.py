@@ -30,7 +30,7 @@ CONFIG_SCHEMA = text_sensor.TEXT_SENSOR_SCHEMA.extend(
     {
         cv.GenerateID(): cv.declare_id(OpenWeatherMapClient),
         cv.Required(CONF_API_KEY): cv.string,
-        cv.Optional(CONF_LANG, default=LANGUAGES): cv.ensure_list(LANGUAGES),
+#        cv.Optional(CONF_LANG, default=LANGUAGES): cv.ensure_list(LANGUAGES),
         # cv.Optional(CONF_CITY_ID): cv.positive_int
     }
 ).extend(cv.polling_component_schema("60s"))
