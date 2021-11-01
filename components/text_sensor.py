@@ -15,31 +15,23 @@ from esphome.const import (
     CONF_TEXT_SENSORS,
 )
 
+CONF_CITY_ID = "city_id"
+CONF_LANG = "language"
+CONF_API_KEY = "api_key"
+
 owm_ns = cg.esphome_ns.namespace("openweathermap")
 
-APIName = owm_ns.enum("APIName")
-API_NAME = {
-    "API_BY_CITY_NAME": APIName.BY_CITY_NAME,
-    "API_BY_CITY_ID": APIName.BY_CITY_ID,
-    "API_BY_GEOGRAPHIC_COORDINATES": APIName.BY_GEOGRAPHIC_COORDINATES,
-    "API_BY_ZIP_CODE": APIName.BY_ZIP_CODE,
-}
+LANGUAGES = {"LANG_IT": "it", "LANG_DE": "de", "LANG_EN": "en"}
 
 OpenWeatherMapClient = owm_ns.class_("openweathermapclient", cg.Component)
-# ServoWriteAction = servo_ns.class_("ServoWriteAction", automation.Action)
-# ServoDetachAction = servo_ns.class_("ServoDetachAction", automation.Action)
+OWMByCityId = owm_ns.class_("OWMByCityId", text_sensor.TextSensor, cg.PollingComponent)
 
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(): cv.declare_id(OpenWeatherMapClient),
-        cv.Required(CONF_LAMBDA): cv.returning_lambda,
-        cv.Required(CONF_TEXT_SENSORS): cv.ensure_list(
-            text_sensor.TEXT_SENSOR_SCHEMA.extend(
-                {
-                    cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
-                }
-            )
-        ),
+        cv.Required(CONF_API_KEY): cv.string,
+        cv.Required(CONF_LANG): cv.ensure_list(cv.In(LANGUAGES)),
+        cv.Optional(CONF_CITY_ID): cv.positive_int
     }
 ).extend(cv.polling_component_schema("60s"))
 
@@ -47,4 +39,3 @@ CONFIG_SCHEMA = cv.Schema(
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
-

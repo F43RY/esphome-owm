@@ -6,13 +6,6 @@
 namespace esphome {
 namespace openweathermap {
 
-enum APIName {
-  BY_CITY_NAME = 0,
-  BY_CITY_ID,
-  BY_GEOGRAPHIC_COORDINATES,
-  BY_ZIP_CODE
-};
-
 static const char *ESPOWM_VERSION = "1.0.0";
 
 static const uint32_t ESPOWM_POLL_INTERVAL_DEFAULT = 100000;
