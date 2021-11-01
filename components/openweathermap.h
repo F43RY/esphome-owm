@@ -12,14 +12,14 @@ namespace openweathermap {
 
 // static const char SERVERNAME[] = "api.openweathermap.org/data/2.5/weather?";
 
-class OpenWeatherMapClient : public text_sensor::TextSensor, public PollingComponent {
+class OpenWeatherMapClient : public PollingComponent, public text_sensor::TextSensor {
  public:
   // OpenWeatherMapClient(const std::function<std::vector<text_sensor::TextSensor *>()> &init) {
   //   this->text_sensors_ = init();
   // }
 
   // text_sensor::TextSensor *get_text_sensor(int i) { return this->text_sensors_[i]; }
-
+  void update() override;
   void dump_config() override;
 
  protected:
