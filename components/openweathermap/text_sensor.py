@@ -21,7 +21,7 @@ CONF_API_KEY = "api_key"
 
 owm_ns = cg.esphome_ns.namespace("openweathermap")
 
-LANGUAGES = {"LANG_IT": "it", "LANG_DE": "de", "LANG_EN": "en"}
+LANGUAGES = ["it", "de", "en"]
 
 # OpenWeatherMapClient = owm_ns.class_("openweathermapclient", cg.Component)
 OpenWeatherMapClient = owm_ns.class_("openweathermapclient", cg.PollingComponent, text_sensor.TextSensor)
@@ -30,7 +30,7 @@ CONFIG_SCHEMA = text_sensor.TEXT_SENSOR_SCHEMA.extend(
     {
         cv.GenerateID(): cv.declare_id(OpenWeatherMapClient),
         cv.Required(CONF_API_KEY): cv.string,
-        cv.Optional(CONF_LANG, default="en"): cv.ensure_list(cv.In(LANGUAGES)),
+        cv.Optional(CONF_LANG, default=LANGUAGES): cv.ensure_list(LANGUAGES),
         # cv.Optional(CONF_CITY_ID): cv.positive_int
     }
 ).extend(cv.polling_component_schema("60s"))
