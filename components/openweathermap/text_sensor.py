@@ -29,8 +29,8 @@ OpenWeatherMapClient = owm_ns.class_("openweathermapclient", cg.PollingComponent
 CONFIG_SCHEMA = text_sensor.TEXT_SENSOR_SCHEMA.extend(
     {
         cv.GenerateID(): cv.declare_id(OpenWeatherMapClient),
-        cv.Optional(CONF_API_KEY): cv.string,
-        # cv.Optional(CONF_LANG): cv.ensure_list(cv.In(LANGUAGES)),
+        cv.Required(CONF_API_KEY): cv.string,
+        cv.Optional(CONF_LANG, default="en"): cv.ensure_list(cv.In(LANGUAGES)),
         # cv.Optional(CONF_CITY_ID): cv.positive_int
     }
 ).extend(cv.polling_component_schema("60s"))
